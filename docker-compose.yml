@@ -1,0 +1,86 @@
+# version: '3'
+# networks:
+#   micro-net:
+#      driver: bridge
+# services:
+#   api_gateway:
+#     build: ./API_Gateway
+#     networks:
+#       - micro-net
+#     ports:
+#       - "3001:3001"
+#     volumes:
+#       - ./API_Gateway:/developer/nodejs/api-gateway
+#       - api-gateway-node-modules:/developer/nodejs/api_gateway/node_modules
+#   python_service:
+#     build: ./python_project
+#     networks:
+#       - micro-net
+#     ports:
+#       - "3005:3005"
+#   flights_service:
+#     build: ./Flights
+#     networks:
+#       - micro-net
+#     ports:
+#       - "3000:3000"
+#     volumes:
+#       - ./Flights:/developer/nodejs/flights_service
+#       - flights_service-node-modules:/developer/nodejs/flights-services/node_modules
+#   booking_service:
+#     build: ./Flights-Booking-services
+#     networks:
+#       - micro-net
+#     ports:
+#       - "4000:4000"
+#     volumes:
+#       - ./Flights-Booking-Service:/developer/nodejs/booking_service
+#       - booking_service-node-modules:/developer/nodejs/booking-service/node_modules
+
+# Compose file without 'version' (optional in v2+)
+networks:
+  micro-net:
+    driver: bridge
+
+services:
+  api_gateway:
+    build: ./API_Gateway
+    networks:
+      - micro-net
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./API_Gateway:/developer/nodejs/api-gateway
+      - api-gateway-node-modules:/developer/nodejs/api-gateway/node_modules
+
+  # python_service:
+  #   build: ./python_project
+  #   networks:
+  #     - micro-net
+  #   ports:
+  #     - "3005:3005"
+
+  # flights_service:
+  #   build: ./Flights
+  #   networks:
+  #     - micro-net
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./Flights:/developer/nodejs/flights_service
+  #     - flights_service-node-modules:/developer/nodejs/flights_service/node_modules
+
+  booking_service:
+    build: ./BookingService  # ✅ fixed folder name
+    networks:
+      - micro-net
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./Flights-Booking-Service:/developer/nodejs/booking_service
+      - booking_service-node-modules:/developer/nodejs/booking_service/node_modules
+
+volumes:
+  api-gateway-node-modules:
+  flights_service-node-modules:
+  booking_service-node-modules:
